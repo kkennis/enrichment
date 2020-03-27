@@ -5,6 +5,8 @@ import FilterForm from "../src/components/FilterForm";
 import AddForm from "../src/components/AddForm";
 import Button from "@material-ui/core/Button";
 
+import "./styles.scss";
+
 //@TODO: Need to figure out how to cache results so we don't hit api so many times
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE = process.env.REACT_APP_BASE;
@@ -94,23 +96,25 @@ class App extends PureComponent {
   render() {
     const { showAddForm } = this.state;
     return (
-      <div className="App">
-        <Button
-          onClick={() => { this.toggleAddForm() }}
-          variant="contained"
-        >
-          {showAddForm ? 'Hide Form' : 'Add Item'}
-        </Button>
+      <div className="enrichment-app">
+
+        <div className="enrichment-app__form-wrapper">
+          <FilterForm sendFilters={this.filterResults} />
+          <Button
+            onClick={() => { this.toggleAddForm() }}
+            variant="contained"
+          >
+            {showAddForm ? 'Hide Form' : 'Add Activity'}
+          </Button>
+        </div>
         {showAddForm && <AddForm />}
-        
-        <FilterForm sendFilters={this.filterResults} />
         {this.state.filteredRecords.length > 0 ? (
           this.state.filteredRecords.map((record, index) => (
             <div key={index}>
               <OutlinedCard
                 activityName={record.fields["Activity Name"]}
                 activityPlace={record.fields["Location"]}
-                description={record.fields["Description"]} // not in API?
+                description={record.fields["Description"]}
                 gradeRange={record.fields["Recommended Ages"]}
                 parentInvolvement={record.fields["Parent Involvement"]}
                 screen={record.fields["Device Required"]}

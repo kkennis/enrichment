@@ -123,111 +123,117 @@ class AddForm extends PureComponent {
 
     return (
       <form id="add-form">
-        <TextInput
-          name="activityName"
-          label="Activity Name"
-          id="input-activity-name"
-          handleChange={this.handleInput}
-          value={activityName}
-        />
+        <div className="add-form__field-wrapper">
+          <div className="add-form__field-wrapper-column">
+            <TextInput
+              name="activityName"
+              label="Activity Name"
+              id="input-activity-name"
+              handleChange={this.handleInput}
+              value={activityName}
+            />
+            {/*@TODO: Switch to textarea?*/}
+            <TextInput
+              name="description"
+              label="Description"
+              id="input-description"
+              handleChange={this.handleInput}
+              value={description}
+            />
+            {/*@TODO: Needs to be multi-select*/}
+            <SelectInput
+              id="input-age"
+              labelId="input-age-label"
+              name="age"
+              label="Recommended Ages"
+              handleChange={this.handleInput}
+              value={age}
+              options={ageOptions}
+            />
 
-        <TextInput
-          name="description"
-          label="Description"
-          id="input-description"
-          handleChange={this.handleInput}
-          value={description}
-        />
+            <SelectInput
+              id="input-involvement"
+              labelId="input-involvement-label"
+              name="involvement"
+              label="Parent Involvement"
+              handleChange={this.handleInput}
+              value={involvement}
+              options={involvementOptions}
+            />
 
-        <SelectInput
-          id="input-age"
-          labelId="input-age-label"
-          name="age"
-          label="Recommended Ages"
-          handleChange={this.handleInput}
-          value={age}
-          options={ageOptions}
-        />
+            <TextInput
+              name="moreInfo"
+              label="Link for More Info"
+              id="input-more-info-link"
+              handleChange={this.handleInput}
+              value={moreInfo}
+            />
+            {/*@TODO: SWitch to textinput?*/}
+            <TextAreaInput
+              name="preparation"
+              label="Preparation / Supplies"
+              id="input-preparation"
+              handleChange={this.handleInput}
+              value={preparation}
+            />
+          </div>
+          <div className="add-form__field-wrapper-column">
 
-        <SelectInput
-          id="input-involvement"
-          labelId="input-involvement-label"
-          name="involvement"
-          label="Parent Involvement"
-          handleChange={this.handleInput}
-          value={involvement}
-          options={involvementOptions}
-        />
+            <SelectInput
+              id="input-place"
+              labelId="input-place-label"
+              name="place"
+              label="Location"
+              handleChange={this.handleInput}
+              value={place}
+              options={placeOptions}
+            />
 
-        <TextInput
-          name="moreInfo"
-          label="Link for More Info"
-          id="input-more-info-link"
-          handleChange={this.handleInput}
-          value={moreInfo}
-        />
+            {/*<SelectInput*/}
+            {/*  id="input-group-activity"*/}
+            {/*  labelId="input-group-activity-label"*/}
+            {/*  name="activitySetting"*/}
+            {/*  label="Solo/Group Activity"*/}
+            {/*  handleChange={this.handleInput}*/}
+            {/*  value={activitySetting}*/}
+            {/*  options={activitySettingOptions}*/}
+            {/*/>*/}
 
-        <TextAreaInput
-          name="preparation"
-          label="Preparation / Supplies"
-          id="input-preparation"
-          handleChange={this.handleInput}
-          value={preparation}
-        />
+            <SelectInput
+              id="input-screen"
+              labelId="input-screen-label"
+              name="screenNeeded"
+              label="Screens"
+              handleChange={this.handleInput}
+              value={screenNeeded}
+              options={screenNeededOptions}
+            />
 
-        <SelectInput
-          id="input-place"
-          labelId="input-place-label"
-          name="place"
-          label="Location"
-          handleChange={this.handleInput}
-          value={place}
-          options={placeOptions}
-        />
+            <TextInput
+              name="firstName"
+              label="Suggested By First Name"
+              id="input-first-name"
+              handleChange={this.handleInput}
+              value={firstName}
+            />
 
-        <SelectInput
-          id="input-group-activity"
-          labelId="input-group-activity-label"
-          name="activitySetting"
-          label="Solo/Group Activity"
-          handleChange={this.handleInput}
-          value={activitySetting}
-          options={activitySettingOptions}
-        />
+            <TextInput
+              name="lastName"
+              label="Suggested By Last Name"
+              id="input-last-name"
+              handleChange={this.handleInput}
+              value={lastName}
+            />
 
-        <SelectInput
-          id="input-screen"
-          labelId="input-screen-label"
-          name="screenNeeded"
-          label="Screens"
-          handleChange={this.handleInput}
-          value={screenNeeded}
-          options={screenNeededOptions}
-        />
-
-        <TextInput
-          name="firstName"
-          label="Suggested By First Name"
-          id="input-first-name"
-          handleChange={this.handleInput}
-          value={firstName}
-        />
-
-        <TextInput
-          name="lastName"
-          label="Suggested By Last Name"
-          id="input-last-name"
-          handleChange={this.handleInput}
-          value={lastName}
-        />
-
-        <TextInput
-          name="email"
-          label="Suggested By Email"
-          id="input-email"
-          handleChange={this.handleInput}
-          value={email}
-        />
+            <TextInput
+              name="email"
+              label="Suggested By Email"
+              id="input-email"
+              handleChange={this.handleInput}
+              value={email}
+            />
+          </div>
+        </div>
 
         <Button
           onClick={() => { this.addForm() }}

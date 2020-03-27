@@ -1,0 +1,28 @@
+.enrichment-app {
+
+}
+
+.filter-form {
+  align-items: flex-end;
+  display: flex;
+  justify-content: space-between;
+}
+
+// Need to tweak
+.add-form {
+  &__field-wrapper {
+    display: flex;
+
+    &-column {
+      flex: 50%;
+
+      .MuiFormControl-root {
+        display: block;
+      }
+
+      .MuiInputBase-root {
+        width: 90%;
+      }
+    }
+  }
+}
