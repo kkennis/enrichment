@@ -1,9 +1,11 @@
 import React, { PureComponent } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import moment from 'moment';
 
 import TextInput from "../components/FormInput/TextInput";
 import TextAreaInput from "../components/FormInput/TextAreaInput";
 import SelectInput from "../components/FormInput/SelectInput";
+import SelectMultipleInput from "../components/FormInput/SelectMultipleInput";
 
 import Button from "@material-ui/core/Button";
 
@@ -26,18 +28,13 @@ class AddForm extends PureComponent {
     this.state = {
       activityName: '',
       description: '',
-      age: '',
+      age: [],
       involvement: '',
       moreInfo: '',
       preparation: '',
       place: '',
-      activitySetting: '',
       screenNeeded: '',
-      firstName: '',
-      lastName: '',
-      email: '',
       screenNeededOptions: ["Yes", "No"],
-      activitySettingOptions: ["Solo", "Group", "Solo or Group"],
       placeOptions: ["Indoor", "Outdoor", "Both Indoor and Outdoor"],
       involvementOptions: ["None", "Low", "Medium", "High"],
       ageOptions: ["All Ages", "Infant (0-12 months)", "Toddler (12-36 months)", "Preschool (ages 3-5)", "Kindergarten", "Grades 1-2", "Grades 3-4", "Middle School", "High School"],
@@ -48,8 +45,6 @@ class AddForm extends PureComponent {
   }
 
   handleInput(e) {
-    console.log(e.target.value);
-    console.log(e.target.name);
     this.setState({[e.target.name]: e.target.value});
   }
 
@@ -62,30 +57,24 @@ class AddForm extends PureComponent {
       moreInfo,
       preparation,
       place,
-      activitySetting,
       screenNeeded,
-      firstName,
-      lastName,
-      email
     } = this.state;
+
+    const date = new Date();
+    const convertedDate = moment(date).format("MM/DD/YYYY HH:mm:ss");
 
     base("Activities").create(
       {
         "Activity Name": activityName,
         "Description": description,
-        "Recommended Ages": age,
+        "Recommended Ages": age.join(", "),
         "Parent Involvement": involvement,
         "Location": place,
         "Device Required": screenNeeded,
-        "Solo/Group Activity - DO NOT USE": activitySetting,
-        "Solo or group activity - DO NOT USE": activitySetting,
-        "Screens- DO NOT USE": screenNeeded,
-        "Indoor or outdoor - DO NOT USE": place,
-        "Suggested By - DO NOT USE: First": firstName,
-        "Suggested By - DO NOT USE: Last": lastName,
-        "Suggested By Email - DO NOT USE": email,
         "Link": moreInfo,
-        "Preparation/Supplies": preparation
+        "Preparation/Supplies": preparation,
+        "Submitted At": convertedDate,
+        "Reviewed": "No"
       },
       function(err, record) {
         if (err) {
@@ -93,12 +82,16 @@ class AddForm extends PureComponent {
         }
         console.log(record.getId());
       }
+      // @TODO: Close form once submitted.
     );
   };
 
 
   render() {
-    const { classes } = this.props;
+    const date = new Date();
+    const convertedDate = moment(date).format("MM/DD/YYYY HH:mm:ss");
+    console.log(convertedDate);
+    // const { classes } = this.props;
     const {
       activityName,
       description,
@@ -107,13 +100,8 @@ class AddForm extends PureComponent {
       moreInfo,
       preparation,
       place,
-      activitySetting,
       screenNeeded,
-      firstName,
-      lastName,
-      email,
       screenNeededOptions,
-      activitySettingOptions,
       placeOptions,
       involvementOptions,
       ageOptions
@@ -141,7 +129,7 @@ class AddForm extends PureComponent {
               value={description}
             />
             {/*@TODO: Needs to be multi-select*/}
-            <SelectInput
+            <SelectMultipleInput
               id="input-age"
               labelId="input-age-label"
               name="age"
@@ -189,16 +177,6 @@ class AddForm extends PureComponent {
               options={placeOptions}
             />
 
-            {/*<SelectInput*/}
-            {/*  id="input-group-activity"*/}
-            {/*  labelId="input-group-activity-label"*/}
-            {/*  name="activitySetting"*/}
-            {/*  label="Solo/Group Activity"*/}
-            {/*  handleChange={this.handleInput}*/}
-            {/*  value={activitySetting}*/}
-            {/*  options={activitySettingOptions}*/}
-            {/*/>*/}
-
             <SelectInput
               id="input-screen"
               labelId="input-screen-label"
@@ -207,30 +185,6 @@ class AddForm extends PureComponent {
               handleChange={this.handleInput}
               value={screenNeeded}
               options={screenNeededOptions}
-            />
-
-            <TextInput
-              name="firstName"
-              label="Suggested By First Name"
-              id="input-first-name"
-              handleChange={this.handleInput}
-              value={firstName}
-            />
-
-            <TextInput
-              name="lastName"
-              label="Suggested By Last Name"
-              id="input-last-name"
-              handleChange={this.handleInput}
-              value={lastName}
-            />
-
-            <TextInput
-              name="email"
-              label="Suggested By Email"
-              id="input-email"
-              handleChange={this.handleInput}
-              value={email}
             />
           </div>
         </div>

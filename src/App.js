@@ -21,6 +21,11 @@ class App extends PureComponent {
     };
     this.filterResults = this.filterResults.bind(this);
   }
+
+  static defaultProps = {
+    email: 'example@example.com'
+  };
+
   componentDidMount() {
     base("Activities")
       .select({ view: "Grid view" })
@@ -93,7 +98,9 @@ console.log(filters);
 
   render() {
     const { showAddForm } = this.state;
+    const { email } = this.props;
     return (
+<<<<<<< HEAD
       <div className="App">
         <Button
           onClick={() => { this.toggleAddForm() }}
@@ -101,6 +108,22 @@ console.log(filters);
         >
           {showAddForm ? 'Hide Form' : 'Add Item'}
         </Button>
+=======
+      <div className="enrichment-app">
+
+        <div className="enrichment-app__form-wrapper">
+          <FilterForm sendFilters={this.filterResults} />
+          <Button
+            onClick={() => { this.toggleAddForm() }}
+            variant="contained"
+          >
+            {showAddForm ? 'Hide Form' : 'Add Activity'}
+          </Button>
+          {/*@TODO: CREATE SEPARATE COMPONENT*/}
+          {/*@TODO: STYLE LIKE OTHER BUTTONS*/}
+          <a href={`mailto:${email}`}>EmailButton</a>
+        </div>
+>>>>>>> 85e03ed413748420579de11d76f7bf7bab711d5e
         {showAddForm && <AddForm />}
         
         <FilterForm sendFilters={this.filterResults} />
