@@ -32,27 +32,34 @@ export default function FilterForm(props) {
   const handleChange = event => {
     console.log(event.target.name);
     console.log(event.target.value);
-    let value = event.target.value;
     if (event.target.name === "age") {
+      let age = event.target.value;
       setAge(event.target.value);
-      props.sendFilters(event.target.value,place, involvement, screens, search );
+      props.sendFilters({age, place, involvement, screens, search });
     }
     else if (event.target.name === "place") {
+      let place = event.target.value;
       setPlace(event.target.value);
-      props.sendFilters({ value, place, involvement, screens, search });
+      props.sendFilters({ age, place, involvement, screens, search });
     }
     else if (event.target.name === "involvement") {
+      let involvement = event.target.value;
       setInvolvement(event.target.value);
-      props.sendFilters({ value, place, involvement, screens, search });
+      props.sendFilters({ age, place, involvement, screens, search });
     }
     else if (event.target.name === "screens") {
+      let screens = event.target.value;
       setScreens(event.target.value);
-      props.sendFilters({ value, place, involvement, screens, search });
+      console.log(search);
+      props.sendFilters({ age, place, involvement, screens, search });
     }
     else if (event.target.name === "search") {
+      let search = event.target.value;
       setSearch(event.target.value);
-      props.sendFilters({ value, place, involvement, screens, search });
+      console.log(search);
+      props.sendFilters({ age, place, involvement, screens, search });
     }
+
   };
 
   const clearForm = () => {
@@ -61,8 +68,12 @@ export default function FilterForm(props) {
     setInvolvement("");
     setScreens("");
     setSearch("");
-    let filters = { age, place, involvement, screens, search };
-    props.sendFilters(filters);
+    let age = "";
+    let place = "";
+    let involvement = "";
+    let screens = "";
+    let search = "";
+    props.sendFilters({ age, place, involvement, screens, search });
   };
 
   return (
