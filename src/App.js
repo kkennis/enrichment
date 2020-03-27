@@ -3,6 +3,7 @@ import Airtable from "airtable";
 import OutlinedCard from "../src/components/OutlinedCard";
 import FilterForm from "../src/components/FilterForm";
 import AddForm from "../src/components/AddForm";
+import Button from "@material-ui/core/Button";
 
 //@TODO: Need to figure out how to cache results so we don't hit api so many times
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -13,6 +14,7 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      showAddForm: false,
       records: [],
       filteredRecords: [],
       filters: []
@@ -84,12 +86,23 @@ class App extends PureComponent {
     });
   }
 
+  toggleAddForm() {
+    const { showAddForm } = this.state;
+    this.setState({'showAddForm': !showAddForm});
+  }
+
   render() {
+    const { showAddForm } = this.state;
     return (
       <div className="App">
-        {/*@TODO: Prob want to add a button to show hide this?*/}
-        <AddForm />
-        {/* @TODO: temporarily here to test select field */}
+        <Button
+          onClick={() => { this.toggleAddForm() }}
+          variant="contained"
+        >
+          {showAddForm ? 'Hide Form' : 'Add Item'}
+        </Button>
+        {showAddForm && <AddForm />}
+        
         <FilterForm sendFilters={this.filterResults} />
         {this.state.filteredRecords.length > 0 ? (
           this.state.filteredRecords.map((record, index) => (
