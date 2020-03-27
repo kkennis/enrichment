@@ -30,16 +30,29 @@ export default function FilterForm(props) {
   const [search, setSearch] = React.useState("");
 
   const handleChange = event => {
-    if (event.target.name === "age") setAge(event.target.value);
-    else if (event.target.name === "place") setPlace(event.target.value);
-    else if (event.target.name === "involvement")
+    console.log(event.target.name);
+    console.log(event.target.value);
+    let value = event.target.value;
+    if (event.target.name === "age") {
+      setAge(event.target.value);
+      props.sendFilters(event.target.value,place, involvement, screens, search );
+    }
+    else if (event.target.name === "place") {
+      setPlace(event.target.value);
+      props.sendFilters({ value, place, involvement, screens, search });
+    }
+    else if (event.target.name === "involvement") {
       setInvolvement(event.target.value);
-    else if (event.target.name === "screens") setScreens(event.target.value);
-    else if (event.target.name === "search") setSearch(event.target.value);
-    console.log("filters");
-    console.log([{ age }, { place }, { involvement }, { screens }, { search }]);
-    let filters = { age, place, involvement, screens, search };
-    props.sendFilters(filters);
+      props.sendFilters({ value, place, involvement, screens, search });
+    }
+    else if (event.target.name === "screens") {
+      setScreens(event.target.value);
+      props.sendFilters({ value, place, involvement, screens, search });
+    }
+    else if (event.target.name === "search") {
+      setSearch(event.target.value);
+      props.sendFilters({ value, place, involvement, screens, search });
+    }
   };
 
   const clearForm = () => {
@@ -48,6 +61,8 @@ export default function FilterForm(props) {
     setInvolvement("");
     setScreens("");
     setSearch("");
+    let filters = { age, place, involvement, screens, search };
+    props.sendFilters(filters);
   };
 
   return (
