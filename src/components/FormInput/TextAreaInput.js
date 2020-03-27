@@ -1,50 +1,24 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 
 import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 
-const styles = theme => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120
-  }
-});
-
-class TextAreaInput extends PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    id: PropTypes.string,
-    label: PropTypes.string,
-    name: PropTypes.string,
-    onChange: PropTypes.func,
-    placeholder: PropTypes.string,
-    value: PropTypes.string
-  };
-
-  onChange = e => {
-    this.props.onChange(e.target.value);
-  };
-
-  render() {
-    const { classes, id, label, placeholder, value } = this.props;
-
-    return (
-      <FormControl className={classes.formControl}>
-        <TextField
-          id={id}
-          label={label}
-          multiline
-          onChange={this.onChange}
-          placeholder={placeholder}
-          rows="3"
-          rowsMax="4"
-          value={value}
-        />
-      </FormControl>
-    );
-  }
+const TextAreaInput = props => {
+  return (
+    <FormControl>
+      <TextField
+        id={props.id}
+        label={props.label}
+        name={props.name}
+        multiline
+        onChange={props.handleChange}
+        placeholder={props.placeholder}
+        rows="3"
+        rowsMax="4"
+        value={props.value}
+      />
+    </FormControl>
+  );
 }
 
-export default withStyles(styles)(TextAreaInput);
+export default TextAreaInput;

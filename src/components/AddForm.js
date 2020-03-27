@@ -1,22 +1,17 @@
 import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 
 import TextInput from "../components/FormInput/TextInput";
 import TextAreaInput from "../components/FormInput/TextAreaInput";
+import SelectInput from "../components/FormInput/SelectInput";
 
-import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 
-import Airtable from "airtable";
-
-const API_KEY = process.env.REACT_APP_API_KEY;
-const BASE = process.env.REACT_APP_BASE;
-const base = new Airtable({ apiKey: API_KEY }).base(BASE);
+// import Airtable from "airtable";
+//
+// const API_KEY = process.env.REACT_APP_API_KEY;
+// const BASE = process.env.REACT_APP_BASE;
+// const base = new Airtable({ apiKey: API_KEY }).base(BASE);
 
 const styles = theme => ({
   selectEmpty: {
@@ -25,16 +20,38 @@ const styles = theme => ({
 });
 
 class AddForm extends PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired
-  };
+  constructor(props) {
+    super(props);
 
-  handleChange = event => {};
+    this.state = {
+      activityName: '',
+      description: '',
+      age: '',
+      involvement: '',
+      moreInfo: '',
+      preparation: '',
+      place: '',
+      activitySetting: '',
+      screenNeeded: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      screenNeededOptions: ["Yes", "No"],
+      activitySettingOptions: ["Solo", "Group", "Solo or Group"],
+      placeOptions: ["Indoor", "Outdoor", "Indoor or Outdoor"],
+      involvementOptions: ["None", "Low", "Medium", "High"],
+      ageOptions: ["All Ages", "Infant (0-12 months)", "Toddler (12-36 months)", "Preschool (ages 3-5)", "Kindergarten", "Grades 1-2", "Grades 3-4", "Middle School", "High School"],
+    };
 
-  onChange = e => {
-    this.props.onChange(e.target.value);
-  };
+    this.handleInput = this.handleInput.bind(this);
+
+  }
+
+  handleInput(e) {
+    console.log(e.target.value);
+    console.log(e.target.name);
+    this.setState({[e.target.name]: e.target.value});
+  }
 
   addForm = () => {
     // base("Activities").create(
@@ -50,176 +67,136 @@ class AddForm extends PureComponent {
     // );
   };
 
-  onChange = fieldPath => value => {
-    // const { data, onChange } = this.props;
-
-    // const newData = _.set(data, fieldPath, value);
-
-    // return onChange(newData);
-  };
 
   render() {
     const { classes } = this.props;
+    const {
+      activityName,
+      description,
+      age,
+      involvement,
+      moreInfo,
+      preparation,
+      place,
+      activitySetting,
+      screenNeeded,
+      firstName,
+      lastName,
+      email,
+      screenNeededOptions,
+      activitySettingOptions,
+      placeOptions,
+      involvementOptions,
+      ageOptions
+    } = this.state;
+
+    console.log(this.state);
+
     return (
       <form id="add-form">
         <TextInput
           name="activityName"
           label="Activity Name"
           id="input-activity-name"
-          onChange={this.onChange}
-          // value={activityName}
+          handleChange={this.handleInput}
+          value={activityName}
         />
 
         <TextInput
           name="description"
           label="Description"
           id="input-description"
-          onChange={this.onChange}
-          // value={description}
+          handleChange={this.handleInput}
+          value={description}
         />
 
-        <FormControl className={classes.formControl}>
-          <InputLabel id="input-age-label">Age</InputLabel>
-          <Select
-            name="age"
-            labelId="input-age-label"
-            id="input-age"
-            onChange={this.handleChange}
-            // value={age}
-          >
-            <MenuItem value="" disabled>
-              Age
-            </MenuItem>
-            <MenuItem value={"All Ages"}>All Ages</MenuItem>
-            <MenuItem value={"Infant (0-12 months)"}>
-              Infant (0-12 months)
-            </MenuItem>
-            <MenuItem value={"Toddler (12-36 months)"}>
-              Toddler (12-36 months)
-            </MenuItem>
-            <MenuItem value={"Preschool (ages 3-5)"}>
-              Preschool (ages 3-5)
-            </MenuItem>
-            <MenuItem value={"Kindergarten"}>Kindergarten</MenuItem>
-            <MenuItem value={"Grades 1-2"}>Grades 1-2</MenuItem>
-            <MenuItem value={"Grades 3-4"}>Grades 3-4</MenuItem>
-            <MenuItem value={"Grades 4-5"}>Grades 4-5</MenuItem>
-            <MenuItem value={"Middle School"}>Middle School</MenuItem>
-            <MenuItem value={"High School"}>High School</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="input-involvement-label">Involvement</InputLabel>
-          <Select
-            name="involvement"
-            labelId="input-involvement-label"
-            id="input-involvement"
-            onChange={this.handleChange}
-            // value={involvement}
-          >
-            <MenuItem value="" disabled>
-              Involvement
-            </MenuItem>
-            <MenuItem value={"None"}>None</MenuItem>
-            <MenuItem value={"Low"}>Low</MenuItem>
-            <MenuItem value={"Medium"}>Medium</MenuItem>
-            <MenuItem value={"High"}>High</MenuItem>
-          </Select>
-        </FormControl>
+        <SelectInput
+          id="input-age"
+          labelId="input-age-label"
+          name="age"
+          label="Age"
+          handleChange={this.handleInput}
+          value={age}
+          options={ageOptions}
+        />
+
+        <SelectInput
+          id="input-involvement"
+          labelId="input-involvement-label"
+          name="involvement"
+          label="Involvement"
+          handleChange={this.handleInput}
+          value={involvement}
+          options={involvementOptions}
+        />
 
         <TextInput
           name="moreInfo"
           label="Link for More Info"
           id="input-more-info-link"
-          onChange={this.onChange}
-          // value={moreInfo}
+          handleChange={this.handleInput}
+          value={moreInfo}
         />
 
-        {/* @TODO: SWITCH TO TEXTAREA */}
         <TextAreaInput
           name="preparation"
           label="Preparation / Supplies"
           id="input-preparation"
-          onChange={this.onChange}
-          // value={preparation}
+          handleChange={this.handleInput}
+          value={preparation}
         />
 
-        <FormControl className={classes.formControl}>
-          <InputLabel id="input-place-label">Place</InputLabel>
-          <Select
-            name="place"
-            labelId="input-place-label"
-            id="input-place"
-            onChange={this.handleChange}
-            // value={place}
-          >
-            <MenuItem value="" disabled>
-              Place
-            </MenuItem>
-            <MenuItem value={"Indoor"}>Indoor</MenuItem>
-            <MenuItem value={"Outdoor"}>Outdoor</MenuItem>
-            <MenuItem value={"Indoor or Outdoor"}>Indoor or Outdoor</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="input-group-activity-label">
-            Solo/Group Activity{" "}
-          </InputLabel>
-          <Select
-            name="groupActivity"
-            labelId="input-group-activity-label"
-            id="input-group-activity"
-            onChange={this.handleChange}
-            // value={groupActivity}
-          >
-            {/* <MenuItem value="" disabled>
-              Solo/Group Activity
-            </MenuItem> */}
-            <MenuItem value={"Solo"}>Solo</MenuItem>
-            <MenuItem value={"Group"}>Group</MenuItem>
-            <MenuItem value={"Solo or Group"}>Solo or Group</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="input-screen-label">Screens</InputLabel>
-          <Select
-            name="screens"
-            labelId="input-screen-label"
-            id="input-screen"
-            onChange={this.handleChange}
-            // value={screens}
-          >
-            <MenuItem value="" disabled>
-              Screens
-            </MenuItem>
-            <MenuItem value={"Yes"}>Yes</MenuItem>
-            <MenuItem value={"No"}>No</MenuItem>
-          </Select>
-        </FormControl>
+        <SelectInput
+          id="input-place"
+          labelId="input-place-label"
+          name="place"
+          label="Place"
+          handleChange={this.handleInput}
+          value={place}
+          options={placeOptions}
+        />
+
+        <SelectInput
+          id="input-group-activity"
+          labelId="input-group-activity-label"
+          name="activitySetting"
+          label="Solo/Group Activity"
+          handleChange={this.handleInput}
+          value={activitySetting}
+          options={activitySettingOptions}
+        />
+        <SelectInput
+          id="input-screen"
+          labelId="input-screen-label"
+          name="screenNeeded"
+          label="Screens"
+          handleChange={this.handleInput}
+          value={screenNeeded}
+          options={screenNeededOptions}
+        />
 
         <TextInput
           name="firstName"
           label="Suggested By First Name"
           id="input-first-name"
-          onChange={this.onChange}
-          // value={firstName}
+          handleChange={this.handleInput}
+          value={firstName}
         />
 
         <TextInput
           name="lastName"
           label="Suggested By Last Name"
           id="input-last-name"
-          onChange={this.onChange}
-          // value={lastName}
+          handleChange={this.handleInput}
+          value={lastName}
         />
 
         <TextInput
           name="email"
           label="Suggested By Email"
           id="input-email"
-          onChange={this.onChange}
-          type="email"
-          // value={email}
+          handleChange={this.handleInput}
+          value={email}
         />
 
         <Button

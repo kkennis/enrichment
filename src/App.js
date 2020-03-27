@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import Airtable from "airtable";
 import OutlinedCard from "../src/components/OutlinedCard";
-import SelectInput from "../src/components/FormInput/SelectInput";
 import FilterForm from "../src/components/FilterForm";
 import AddForm from "../src/components/AddForm";
 
