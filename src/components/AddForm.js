@@ -119,6 +119,7 @@ class AddForm extends PureComponent {
               id="input-activity-name"
               handleChange={this.handleInput}
               value={activityName}
+              required={true}
             />
             {/*@TODO: Switch to textarea?*/}
             <TextInput
@@ -128,11 +129,11 @@ class AddForm extends PureComponent {
               handleChange={this.handleInput}
               value={description}
             />
-            {/*@TODO: Needs to be multi-select*/}
             <SelectMultipleInput
               id="input-age"
               labelId="input-age-label"
               name="age"
+              required={true}
               label="Recommended Ages"
               handleChange={this.handleInput}
               value={age}
@@ -144,6 +145,7 @@ class AddForm extends PureComponent {
               labelId="input-involvement-label"
               name="involvement"
               label="Parent Involvement"
+              required={true}
               handleChange={this.handleInput}
               value={involvement}
               options={involvementOptions}
@@ -172,6 +174,7 @@ class AddForm extends PureComponent {
               labelId="input-place-label"
               name="place"
               label="Location"
+              required={true}
               handleChange={this.handleInput}
               value={place}
               options={placeOptions}
@@ -181,7 +184,8 @@ class AddForm extends PureComponent {
               id="input-screen"
               labelId="input-screen-label"
               name="screenNeeded"
-              label="Screens"
+              label="Device Required"
+              required={true}
               handleChange={this.handleInput}
               value={screenNeeded}
               options={screenNeededOptions}

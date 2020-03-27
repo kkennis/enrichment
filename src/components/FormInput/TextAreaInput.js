@@ -13,6 +13,7 @@ const TextAreaInput = props => {
         multiline
         onChange={props.handleChange}
         placeholder={props.placeholder}
+        required={props.required}
         rows="3"
         rowsMax="4"
         value={props.value}

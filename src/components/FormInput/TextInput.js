@@ -10,6 +10,7 @@ const TextInput = props => {
         name={props.name}
         id={props.id}
         onChange={props.handleChange}
+        required={props.required}
         value={props.value}
       />
     </FormControl>

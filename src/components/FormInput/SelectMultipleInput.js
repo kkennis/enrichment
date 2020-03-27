@@ -6,7 +6,7 @@ import Select from "@material-ui/core/Select";
 
 const SelectMultipleInput = props => {
   return (
-    <FormControl>
+    <FormControl required={props.required}>
       <InputLabel
         id={props.labelId}
       >
