@@ -100,15 +100,6 @@ console.log(filters);
     const { showAddForm } = this.state;
     const { email } = this.props;
     return (
-<<<<<<< HEAD
-      <div className="App">
-        <Button
-          onClick={() => { this.toggleAddForm() }}
-          variant="contained"
-        >
-          {showAddForm ? 'Hide Form' : 'Add Item'}
-        </Button>
-=======
       <div className="enrichment-app">
 
         <div className="enrichment-app__form-wrapper">
@@ -123,7 +114,6 @@ console.log(filters);
           {/*@TODO: STYLE LIKE OTHER BUTTONS*/}
           <a href={`mailto:${email}`}>EmailButton</a>
         </div>
->>>>>>> 85e03ed413748420579de11d76f7bf7bab711d5e
         {showAddForm && <AddForm />}
         
         <FilterForm sendFilters={this.filterResults} />
