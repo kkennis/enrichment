@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 //for search input
@@ -30,8 +29,6 @@ export default function FilterForm(props) {
   const [search, setSearch] = React.useState("");
 
   const handleChange = event => {
-    console.log(event.target.name);
-    console.log(event.target.value);
     if (event.target.name === "age") {
       let age = event.target.value;
       setAge(event.target.value);
@@ -50,13 +47,11 @@ export default function FilterForm(props) {
     else if (event.target.name === "screens") {
       let screens = event.target.value;
       setScreens(event.target.value);
-      console.log(search);
       props.sendFilters({ age, place, involvement, screens, search });
     }
     else if (event.target.name === "search") {
       let search = event.target.value;
       setSearch(event.target.value);
-      console.log(search);
       props.sendFilters({ age, place, involvement, screens, search });
     }
 

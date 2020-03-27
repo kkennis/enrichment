@@ -42,19 +42,7 @@ class App extends PureComponent {
       });
   }
 
-  // sendFilters(childData) {
-  //   console.log("send filters");
-  //   // this.setState({ filters: childData });
-  //   // console.log(childData);
-
-  //   // console.log("app this.state.filters");
-  //   // console.log(this.state.filters);
-  //   this.filterResults(childData);
-  // }
-
   filterResults(filters) {
-    //filter - if statements to prevent undefined errors
-console.log(filters);
     let results = this.state.records.filter(function(record) {
       if (!record.fields["Activity Name"]) {
         record.fields["Activity Name"] = "";
@@ -74,8 +62,6 @@ console.log(filters);
       if (!record.fields["Device Required"]) {
         record.fields["Device Required"] = "";
       }
-
-      //@TODO: fill in with values from filters
       return (
         record.fields["Location"].includes(filters.place) &&
         record.fields["Device Required"].includes(filters.screens) &&
@@ -103,7 +89,6 @@ console.log(filters);
       <div className="enrichment-app">
 
         <div className="enrichment-app__form-wrapper">
-          <FilterForm sendFilters={this.filterResults} />
           <Button
             onClick={() => { this.toggleAddForm() }}
             variant="contained"
