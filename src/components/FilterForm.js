@@ -96,7 +96,7 @@ export default function FilterForm(props) {
           </MenuItem>
           <MenuItem value={"Indoor"}>Indoor</MenuItem>
           <MenuItem value={"Outdoor"}>Outdoor</MenuItem>
-          <MenuItem value={"Indoor or Outdoor"}>Indoor or Outdoor</MenuItem>
+          <MenuItem value={"Both Indoor and Outdoor"}>Both Indoor and Outdoor</MenuItem>
         </Select>
       </FormControl>
       <FormControl className={classes.formControl}>
