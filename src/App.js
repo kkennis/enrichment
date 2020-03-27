@@ -10,6 +10,7 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE = process.env.REACT_APP_BASE;
 const base = new Airtable({ apiKey: API_KEY }).base(BASE);
 
+
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -28,15 +29,17 @@ class App extends PureComponent {
 
   componentDidMount() {
     base("Activities")
-      .select({ view: "Grid view" })
-      .eachPage((records, fetchNextPage) => {
+      .select({ view: "Grid view" , sort: [
+        {field: 'Activity Name', direction: 'asc'}    ]})
+      .eachPage((data, fetchNextPage) => {
+        let records = this.state.records;
         this.setState({
-          records
+          records: records.concat(data)
         });
         this.setState({
-          filteredRecords: records
+          filteredRecords: records.concat(data)
         });
-        // console.log(records);
+        console.log(records.length);
         // Airtable API’s way of giving us the next record in our spreadsheet
         fetchNextPage();
       });
