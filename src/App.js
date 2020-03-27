@@ -29,7 +29,7 @@ class App extends PureComponent {
 
   componentDidMount() {
     base("Activities")
-      .select({ view: "Grid view" , sort: [
+      .select({ view: "Grid view" , maxRecords: 20, sort: [
         {field: 'Activity Name', direction: 'asc'}    ]})
       .eachPage((data, fetchNextPage) => {
         let records = this.state.records;
@@ -45,7 +45,41 @@ class App extends PureComponent {
       });
   }
 
-  filterResults(filters) {
+  //calling API
+  filterResults(filters){
+    let queryString = 'AND(OR(FIND("'+filters.search+'",{Activity Name}),FIND("'+filters.search+'",{Description}),FIND("'+filters.search+'",{Preparation/Supplies}))';
+    console.log(filters.place);
+    if (filters.place !== ""){
+      queryString = queryString.concat(',"'+filters.place+'"={Location}');
+    }
+    if (filters.involvement !== ""){
+      queryString = queryString.concat(',"'+filters.involvement+'"={Parent Involvement}');
+    }
+    if (filters.age !== ""){
+      queryString = queryString.concat(',"'+filters.age+'"={Recommended Ages}');
+    }
+    if (filters.screens !== ""){
+      queryString = queryString.concat(',"'+filters.screens+'"={Device Required}');
+    }
+    queryString+=')';
+    console.log(queryString);
+    base("Activities")
+      .select({ view: "Grid view" , maxRecords: 20, sort: [
+        {field: 'Activity Name', direction: 'asc'}    ], filterByFormula:queryString})
+      .eachPage((data, fetchNextPage) => {
+        this.setState({
+          records: data
+        });
+        this.setState({
+          filteredRecords: data
+        });
+        // Airtable API’s way of giving us the next record in our spreadsheet
+        fetchNextPage();
+      });
+  }
+
+  //filtering existing results
+  /*filterResults(filters) {
     let results = this.state.records.filter(function(record) {
       if (!record.fields["Activity Name"]) {
         record.fields["Activity Name"] = "";
@@ -78,7 +112,7 @@ class App extends PureComponent {
     this.setState({
       filteredRecords: results
     });
-  }
+  }*/
 
   toggleAddForm() {
     const { showAddForm } = this.state;
