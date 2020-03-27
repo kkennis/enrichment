@@ -23,6 +23,11 @@ class App extends PureComponent {
     };
     this.filterResults = this.filterResults.bind(this);
   }
+
+  static defaultProps = {
+    email: 'example@example.com'
+  };
+
   componentDidMount() {
     base("Activities")
       .select({ view: "Grid view" })
@@ -95,6 +100,7 @@ class App extends PureComponent {
 
   render() {
     const { showAddForm } = this.state;
+    const { email } = this.props;
     return (
       <div className="enrichment-app">
 
@@ -106,6 +112,9 @@ class App extends PureComponent {
           >
             {showAddForm ? 'Hide Form' : 'Add Activity'}
           </Button>
+          {/*@TODO: CREATE SEPARATE COMPONENT*/}
+          {/*@TODO: STYLE LIKE OTHER BUTTONS*/}
+          <a href={`mailto:${email}`}>EmailButton</a>
         </div>
         {showAddForm && <AddForm />}
         {this.state.filteredRecords.length > 0 ? (

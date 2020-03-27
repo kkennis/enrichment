@@ -70,6 +70,7 @@ class AddForm extends PureComponent {
       email
     } = this.state;
 
+    // @TODO: ADD SUBMITED AT TIMESTAMP + ADD another field "Reviewed"
     base("Activities").create(
       {
         "Activity Name": activityName,
