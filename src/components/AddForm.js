@@ -13,11 +13,11 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE = process.env.REACT_APP_BASE;
 const base = new Airtable({ apiKey: API_KEY }).base(BASE);
 
-const styles = theme => ({
-  selectEmpty: {
-    marginTop: theme.spacing(2)
-  }
-});
+// const styles = theme => ({
+//   selectEmpty: {
+//     marginTop: theme.spacing(2)
+//   }
+// });
 
 class AddForm extends PureComponent {
   constructor(props) {
@@ -194,6 +194,7 @@ class AddForm extends PureComponent {
           value={activitySetting}
           options={activitySettingOptions}
         />
+
         <SelectInput
           id="input-screen"
           labelId="input-screen-label"
@@ -230,7 +231,7 @@ class AddForm extends PureComponent {
 
         <Button
           onClick={() => { this.addForm() }}
-          className={classes.formControl}
+          // className={classes.formControl}
           variant="contained"
         >
           Add
@@ -240,4 +241,5 @@ class AddForm extends PureComponent {
   }
 }
 
-export default withStyles(styles)(AddForm);
+// export default withStyles(styles)(AddForm);
+export default AddForm;
