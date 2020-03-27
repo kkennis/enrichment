@@ -7,11 +7,11 @@ import SelectInput from "../components/FormInput/SelectInput";
 
 import Button from "@material-ui/core/Button";
 
-// import Airtable from "airtable";
-//
-// const API_KEY = process.env.REACT_APP_API_KEY;
-// const BASE = process.env.REACT_APP_BASE;
-// const base = new Airtable({ apiKey: API_KEY }).base(BASE);
+import Airtable from "airtable";
+
+const API_KEY = process.env.REACT_APP_API_KEY;
+const BASE = process.env.REACT_APP_BASE;
+const base = new Airtable({ apiKey: API_KEY }).base(BASE);
 
 const styles = theme => ({
   selectEmpty: {
@@ -38,7 +38,7 @@ class AddForm extends PureComponent {
       email: '',
       screenNeededOptions: ["Yes", "No"],
       activitySettingOptions: ["Solo", "Group", "Solo or Group"],
-      placeOptions: ["Indoor", "Outdoor", "Indoor or Outdoor"],
+      placeOptions: ["Indoor", "Outdoor", "Both Indoor and Outdoor"],
       involvementOptions: ["None", "Low", "Medium", "High"],
       ageOptions: ["All Ages", "Infant (0-12 months)", "Toddler (12-36 months)", "Preschool (ages 3-5)", "Kindergarten", "Grades 1-2", "Grades 3-4", "Middle School", "High School"],
     };
@@ -54,17 +54,46 @@ class AddForm extends PureComponent {
   }
 
   addForm = () => {
-    // base("Activities").create(
-    //   {
-    //     //enter data values here
-    //   },
-    //   function(err, record) {
-    //     if (err) {
-    //       console.error(err);
-    //     }
-    //     console.log(record.getId());
-    //   }
-    // );
+    const {
+      activityName,
+      description,
+      age,
+      involvement,
+      moreInfo,
+      preparation,
+      place,
+      activitySetting,
+      screenNeeded,
+      firstName,
+      lastName,
+      email
+    } = this.state;
+
+    base("Activities").create(
+      {
+        "Activity Name": activityName,
+        "Description": description,
+        "Recommended Ages": age,
+        "Parent Involvement": involvement,
+        "Location": place,
+        "Device Required": screenNeeded,
+        "Solo/Group Activity - DO NOT USE": activitySetting,
+        "Solo or group activity - DO NOT USE": activitySetting,
+        "Screens- DO NOT USE": screenNeeded,
+        "Indoor or outdoor - DO NOT USE": place,
+        "Suggested By - DO NOT USE: First": firstName,
+        "Suggested By - DO NOT USE: Last": lastName,
+        "Suggested By Email - DO NOT USE": email,
+        "Link": moreInfo,
+        "Preparation/Supplies": preparation
+      },
+      function(err, record) {
+        if (err) {
+          console.error(err);
+        }
+        console.log(record.getId());
+      }
+    );
   };
 
 
@@ -114,7 +143,7 @@ class AddForm extends PureComponent {
           id="input-age"
           labelId="input-age-label"
           name="age"
-          label="Age"
+          label="Recommended Ages"
           handleChange={this.handleInput}
           value={age}
           options={ageOptions}
@@ -124,7 +153,7 @@ class AddForm extends PureComponent {
           id="input-involvement"
           labelId="input-involvement-label"
           name="involvement"
-          label="Involvement"
+          label="Parent Involvement"
           handleChange={this.handleInput}
           value={involvement}
           options={involvementOptions}
@@ -150,7 +179,7 @@ class AddForm extends PureComponent {
           id="input-place"
           labelId="input-place-label"
           name="place"
-          label="Place"
+          label="Location"
           handleChange={this.handleInput}
           value={place}
           options={placeOptions}
@@ -200,7 +229,7 @@ class AddForm extends PureComponent {
         />
 
         <Button
-          onClick={this.addForm}
+          onClick={() => { this.addForm() }}
           className={classes.formControl}
           variant="contained"
         >
