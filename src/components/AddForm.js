@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import TextInput from "../components/FormInput/TextInput";
 import TextAreaInput from "../components/FormInput/TextAreaInput";
 import SelectInput from "../components/FormInput/SelectInput";
+import SelectMultipleInput from "../components/FormInput/SelectMultipleInput";
 
 import Button from "@material-ui/core/Button";
 
@@ -26,18 +27,18 @@ class AddForm extends PureComponent {
     this.state = {
       activityName: '',
       description: '',
-      age: '',
+      age: [],
       involvement: '',
       moreInfo: '',
       preparation: '',
       place: '',
-      activitySetting: '',
+      // activitySetting: '',
       screenNeeded: '',
       firstName: '',
       lastName: '',
       email: '',
       screenNeededOptions: ["Yes", "No"],
-      activitySettingOptions: ["Solo", "Group", "Solo or Group"],
+      // activitySettingOptions: ["Solo", "Group", "Solo or Group"],
       placeOptions: ["Indoor", "Outdoor", "Both Indoor and Outdoor"],
       involvementOptions: ["None", "Low", "Medium", "High"],
       ageOptions: ["All Ages", "Infant (0-12 months)", "Toddler (12-36 months)", "Preschool (ages 3-5)", "Kindergarten", "Grades 1-2", "Grades 3-4", "Middle School", "High School"],
@@ -62,7 +63,7 @@ class AddForm extends PureComponent {
       moreInfo,
       preparation,
       place,
-      activitySetting,
+      // activitySetting,
       screenNeeded,
       firstName,
       lastName,
@@ -73,12 +74,12 @@ class AddForm extends PureComponent {
       {
         "Activity Name": activityName,
         "Description": description,
-        "Recommended Ages": age,
+        "Recommended Ages": age.join(", "),
         "Parent Involvement": involvement,
         "Location": place,
         "Device Required": screenNeeded,
-        "Solo/Group Activity - DO NOT USE": activitySetting,
-        "Solo or group activity - DO NOT USE": activitySetting,
+        // "Solo/Group Activity - DO NOT USE": activitySetting,
+        // "Solo or group activity - DO NOT USE": activitySetting,
         "Screens- DO NOT USE": screenNeeded,
         "Indoor or outdoor - DO NOT USE": place,
         "Suggested By - DO NOT USE: First": firstName,
@@ -93,6 +94,7 @@ class AddForm extends PureComponent {
         }
         console.log(record.getId());
       }
+      // @TODO: Close form once submitted.
     );
   };
 
@@ -107,13 +109,13 @@ class AddForm extends PureComponent {
       moreInfo,
       preparation,
       place,
-      activitySetting,
+      // activitySetting,
       screenNeeded,
       firstName,
       lastName,
       email,
       screenNeededOptions,
-      activitySettingOptions,
+      // activitySettingOptions,
       placeOptions,
       involvementOptions,
       ageOptions
@@ -141,7 +143,7 @@ class AddForm extends PureComponent {
               value={description}
             />
             {/*@TODO: Needs to be multi-select*/}
-            <SelectInput
+            <SelectMultipleInput
               id="input-age"
               labelId="input-age-label"
               name="age"
