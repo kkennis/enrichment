@@ -12,7 +12,7 @@ import EmailButton from "./components/EmailButton";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE = process.env.REACT_APP_BASE;
 const base = new Airtable({ apiKey: API_KEY }).base(BASE);
-const perPage = 20;
+const perPage = 15;
 
 class App extends PureComponent {
   constructor(props) {
@@ -165,6 +165,22 @@ class App extends PureComponent {
     this.setState({'showAddForm': bool});
   }
 
+  renderNoResults(){
+    if (this.state.records.length == 0){
+      return (
+        <h2>Loading...</h2>
+      )
+    }
+    else {
+      return(
+        <div>
+          <h2>Sorry, we don't have activities with what you're looking for.</h2>
+          <p>No Results</p>
+        </div>
+      )
+    }
+  }
+
   render() {
     const { showAddForm } = this.state;
     const { email } = this.props;
@@ -183,6 +199,10 @@ class App extends PureComponent {
         {showAddForm && <AddForm action={this.toggleAddFormFromChild} />}
         
         <FilterForm sendFilters={this.filterResults} />
+        {this.state.viewableResults.length > 10 &&        
+         <Pagination count={Math.ceil(this.state.filteredRecords.length / perPage)}
+                    page={this.state.page}
+                    onChange={this.handlePageChange}  showFirstButton showLastButton  color="primary" />}
         {this.state.viewableResults.length > 0 ? (
           this.state.viewableResults.map((record, index) => (
             <div key={index}>
@@ -199,7 +219,7 @@ class App extends PureComponent {
             </div>
           ))
         ) : (
-          <p>No Results</p>
+          this.renderNoResults()
         )}
         <Pagination count={Math.ceil(this.state.filteredRecords.length / perPage)}
                     page={this.state.page}
