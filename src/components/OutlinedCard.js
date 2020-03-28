@@ -98,7 +98,7 @@ class OutlinedCard extends PureComponent {
         </CardContent>
         <CardActions>
           {validURL({learnMoreLink}) && (
-            <Button target="_blank" href={learnMoreLink} size="small">
+            <Button variant="contained" size="medium"  color="primary" disableElevation target="_blank" href={learnMoreLink} size="small">
               Learn More
             </Button>
           )}

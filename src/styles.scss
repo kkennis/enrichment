@@ -1,10 +1,19 @@
 $breakpoint-tablet: 768px;
 
 .enrichment-app {
-
+  padding: 1rem;
 }
 
+//Results Div
+.resultsDiv{
+  margin: 1rem auto;
+  background-color: #F0F8FF !important;
+  padding: 1rem;
+}
+
+//filter form
 .filter-form {
+  margin: 2rem auto 3rem auto;
   align-items: stretch;
   display: flex;
   flex-direction: column;
@@ -58,3 +67,4 @@ $breakpoint-tablet: 768px;
   display: flex;
   justify-content: center;
 }
+

@@ -72,7 +72,7 @@ export default function FilterForm(props) {
   };
 
   return (
-    <form className="filter-form" id="filter-form">
+    <div className="filter-form" id="filter-form">
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">Age</InputLabel>
         <Select
@@ -82,9 +82,7 @@ export default function FilterForm(props) {
           onChange={handleChange}
           value={age}
         >
-          <MenuItem value="" disabled>
-            Age
-          </MenuItem>
+          <MenuItem value={""}>No preference</MenuItem>
           <MenuItem value={"All Ages"}>All Ages</MenuItem>
           <MenuItem value={"Infant (0-12 months)"}>
             Infant (0-12 months)
@@ -112,9 +110,7 @@ export default function FilterForm(props) {
           onChange={handleChange}
           value={place}
         >
-          <MenuItem value="" disabled>
-            Place
-          </MenuItem>
+          <MenuItem value={""}>No preference</MenuItem>
           <MenuItem value={"Indoor"}>Indoor</MenuItem>
           <MenuItem value={"Outdoor"}>Outdoor</MenuItem>
           <MenuItem value={"Both Indoor and Outdoor"}>Both Indoor and Outdoor</MenuItem>
@@ -129,9 +125,7 @@ export default function FilterForm(props) {
           onChange={handleChange}
           value={screens}
         >
-          <MenuItem value="" disabled>
-            Screens
-          </MenuItem>
+          <MenuItem value={""}>No preference</MenuItem>
           <MenuItem value={"Yes"}>Yes</MenuItem>
           <MenuItem value={"No"}>No</MenuItem>
         </Select>
@@ -145,9 +139,7 @@ export default function FilterForm(props) {
           onChange={handleChange}
           value={involvement}
         >
-          <MenuItem value="" disabled>
-            Involvement
-          </MenuItem>
+          <MenuItem value={""}>No preference</MenuItem>
           <MenuItem value={"None"}>None</MenuItem>
           <MenuItem value={"Low"}>Low</MenuItem>
           <MenuItem value={"Medium"}>Medium</MenuItem>
@@ -173,10 +165,10 @@ export default function FilterForm(props) {
       <Button
         onClick={clearForm}
         className={classes.formControl}
-        variant="contained"
+        variant="contained" disableElevation
       >
         Reset
       </Button>
-    </form>
+    </div>
   );
 }
