@@ -7,6 +7,8 @@ import TextAreaInput from "../components/FormInput/TextAreaInput";
 import SelectInput from "../components/FormInput/SelectInput";
 import SelectMultipleInput from "../components/FormInput/SelectMultipleInput";
 
+import Card from '@material-ui/core/Card';
+
 import Button from "@material-ui/core/Button";
 
 import Airtable from "airtable";
@@ -122,6 +124,7 @@ class AddForm extends PureComponent {
     console.log(this.state);
 
     return (
+      <Card className="formCard">
       <form id="add-form">
         <div className="add-form__field-wrapper">
           <div className="add-form__field-wrapper-column">
@@ -214,6 +217,7 @@ class AddForm extends PureComponent {
         </Button>
         {errorMessage && <div className="add-form__error">{errorMessage}</div>}
       </form>
+      </Card>
     );
   }
 }
