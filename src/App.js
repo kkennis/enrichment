@@ -107,7 +107,6 @@ class App extends PureComponent {
 
   //filtering existing results
   filterResults(filters) {
-    console.log("this.state.records " + this.state.records);
     console.log(filters);
     let results = this.state.records.filter(function(record) {
       if (!record.fields["Activity Name"]) {
@@ -140,7 +139,7 @@ class App extends PureComponent {
     });
     console.log("results " + results);
     this.setState({
-      viewableResults: results,
+      viewableResults: results.slice(0, perPage),
       filteredRecords: results,
       page:1
     });
