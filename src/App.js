@@ -33,7 +33,7 @@ class App extends PureComponent {
     let count = 0;
     base("Activities")
       .select({ view: "Grid view" , /*maxRecords: 100,*/ sort: [
-        {field: 'Activity Name', direction: 'asc'}    ]})
+        {field: 'Activity Name', direction: 'asc'} ], filterByFormula:'FIND("Yes",{Reviewed})'})
       .eachPage((data, fetchNextPage) => {
         console.log(data.length);
         let records = this.state.records;
