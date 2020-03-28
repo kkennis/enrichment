@@ -20,7 +20,8 @@ function validURL(string) {
 
 const styles = theme => ({
   root: {
-    minWidth: 275
+    minWidth: 275,
+    margin: "15px 0"
   },
   bullet: {
     display: "inline-block",

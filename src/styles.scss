@@ -1,11 +1,28 @@
+$breakpoint-tablet: 768px;
+
 .enrichment-app {
 
 }
 
 .filter-form {
-  align-items: flex-end;
+  align-items: stretch;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+
+  @media (min-width: $breakpoint-tablet) {
+    align-items: flex-end;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  &__search-field.MuiFormControl-root {
+    margin: 8px;
+    min-width: 120px;
+
+    @media (min-width: $breakpoint-tablet) {
+      margin-left: auto;
+    }
+  }
 }
 
 // Need to tweak

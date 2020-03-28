@@ -171,16 +171,11 @@ class App extends PureComponent {
           >
             {showAddForm ? 'Hide Form' : 'Add Activity'}
           </Button>
-          {/*@TODO: CREATE SEPARATE COMPONENT*/}
-          {/*@TODO: STYLE LIKE OTHER BUTTONS*/}
-          <a href={`mailto:${email}`}>EmailButton</a>
+          <a className="MuiButtonBase-root MuiButton-root MuiButton-contained" href={`mailto:${email}`}>EmailButton</a>
         </div>
         {showAddForm && <AddForm action={this.toggleAddFormFromChild} />}
         
         <FilterForm sendFilters={this.filterResults} />
-        <Pagination count={Math.ceil(this.state.filteredRecords.length / perPage)}
-                                                page={this.state.page}
-                                                onChange={this.handlePageChange}  showFirstButton showLastButton  color="primary" />
         {this.state.viewableResults.length > 0 ? (
           this.state.viewableResults.map((record, index) => (
             <div key={index}>
@@ -197,8 +192,11 @@ class App extends PureComponent {
             </div>
           ))
         ) : (
-          <p>Loading...</p>
+          <p>No Results</p>
         )}
+        <Pagination count={Math.ceil(this.state.filteredRecords.length / perPage)}
+                    page={this.state.page}
+                    onChange={this.handlePageChange}  showFirstButton showLastButton  color="primary" />
       </div>
     );
   }
