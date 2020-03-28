@@ -4,11 +4,14 @@ import OutlinedCard from "../src/components/OutlinedCard";
 import FilterForm from "../src/components/FilterForm";
 import AddForm from "../src/components/AddForm";
 import Button from "@material-ui/core/Button";
+import Pagination from '@material-ui/lab/Pagination';
 
 //@TODO: Need to figure out how to cache results so we don't hit api so many times
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE = process.env.REACT_APP_BASE;
 const base = new Airtable({ apiKey: API_KEY }).base(BASE);
+const perPage = 20;
+
 
 
 class App extends PureComponent {
@@ -18,7 +21,9 @@ class App extends PureComponent {
       showAddForm: false,
       records: [],
       filteredRecords: [],
-      filters: []
+      filters: [],
+      page: 1,
+      viewableResults: []
     };
     this.filterResults = this.filterResults.bind(this);
   }
@@ -28,21 +33,32 @@ class App extends PureComponent {
   };
 
   componentDidMount() {
+    let count = 0;
     base("Activities")
       .select({ view: "Grid view" , /*maxRecords: 100,*/ sort: [
         {field: 'Activity Name', direction: 'asc'}    ]})
       .eachPage((data, fetchNextPage) => {
+        console.log(data.length);
         let records = this.state.records;
         this.setState({
           records: records.concat(data)
         });
+        if (count===0){
+          count++;
+          console.log(data.slice(perPage -1));
+          this.setState({
+            viewableResults: data.slice(0,perPage -1)
+          })
+          console.log("viewable" + this.state.viewableResults);
+        }
         this.setState({
-          filteredRecords: records.concat(data)
+          filteredRecords: records.concat(data),
         });
         console.log(records.length);
         // Airtable API’s way of giving us the next record in our spreadsheet
         fetchNextPage();
       });
+
   }
 /*
   //calling API
@@ -78,6 +94,20 @@ class App extends PureComponent {
       });
   }*/
 
+  // HANDLE PAGE CHANGE
+  handlePageChange = (event, value) => {
+    console.log(this.state.page);
+    console.log(this.state.filteredRecords);
+    console.log(this.state.viewableResults);
+    this.setState({page: value})
+    if (perPage * value >= this.state.filteredRecords.length)
+      this.setState({viewableResults: (this.state.filteredRecords.slice((value - 1) * perPage))
+        })
+    else
+      this.setState({viewableResults: (this.state.filteredRecords.slice((value - 1) * perPage, value * perPage)
+        )});
+};
+
   //filtering existing results
   filterResults(filters) {
     let results = this.state.records.filter(function(record) {
@@ -110,7 +140,8 @@ class App extends PureComponent {
     });
 
     this.setState({
-      filteredRecords: results
+      filteredRecords: results,
+      page:1
     });
   }
 
@@ -139,8 +170,11 @@ class App extends PureComponent {
         {showAddForm && <AddForm />}
         
         <FilterForm sendFilters={this.filterResults} />
-        {this.state.filteredRecords.length > 0 ? (
-          this.state.filteredRecords.map((record, index) => (
+        <Pagination count={Math.ceil(this.state.filteredRecords.length / perPage)}
+                                                page={this.state.page}
+                                                onChange={this.handlePageChange}  showFirstButton showLastButton  color="primary" />
+        {this.state.viewableResults.length > 0 ? (
+          this.state.viewableResults.map((record, index) => (
             <div key={index}>
               <OutlinedCard
                 activityName={record.fields["Activity Name"]}
