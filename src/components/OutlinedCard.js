@@ -81,19 +81,19 @@ class OutlinedCard extends PureComponent {
             {/* Description is currently not coming through from API */}
             {description}
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body1" component="p">
             <strong>Ages:</strong> {gradeRange}
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body1" component="p">
             <strong>Place:</strong> {activityPlace}
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body1" component="p">
             <strong>Screen:</strong> {screen}
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body1" component="p">
             <strong>Parent Involvement:</strong> {parentInvolvement}
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body1" component="p">
             <strong>Preparation / Supplies:</strong> {preparation}
           </Typography>
         </CardContent>

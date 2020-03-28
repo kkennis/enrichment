@@ -164,7 +164,7 @@ class App extends PureComponent {
   renderPagination() {
     return (
       <Pagination count={Math.ceil(this.state.filteredRecords.length / perPage)}
-        page={this.state.page}
+        page={this.state.page} size="small"
         onChange={this.handlePageChange} showFirstButton showLastButton color="primary" />
     )
   }
