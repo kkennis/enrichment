@@ -29,7 +29,7 @@ class App extends PureComponent {
 
   componentDidMount() {
     base("Activities")
-      .select({ view: "Grid view" , maxRecords: 20, sort: [
+      .select({ view: "Grid view" , /*maxRecords: 100,*/ sort: [
         {field: 'Activity Name', direction: 'asc'}    ]})
       .eachPage((data, fetchNextPage) => {
         let records = this.state.records;
@@ -44,7 +44,7 @@ class App extends PureComponent {
         fetchNextPage();
       });
   }
-
+/*
   //calling API
   filterResults(filters){
     let queryString = 'AND(OR(FIND("'+filters.search+'",{Activity Name}),FIND("'+filters.search+'",{Description}),FIND("'+filters.search+'",{Preparation/Supplies}))';
@@ -76,10 +76,10 @@ class App extends PureComponent {
         // Airtable API’s way of giving us the next record in our spreadsheet
         fetchNextPage();
       });
-  }
+  }*/
 
   //filtering existing results
-  /*filterResults(filters) {
+  filterResults(filters) {
     let results = this.state.records.filter(function(record) {
       if (!record.fields["Activity Name"]) {
         record.fields["Activity Name"] = "";
@@ -112,7 +112,7 @@ class App extends PureComponent {
     this.setState({
       filteredRecords: results
     });
-  }*/
+  }
 
   toggleAddForm() {
     const { showAddForm } = this.state;
