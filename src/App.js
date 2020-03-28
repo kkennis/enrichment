@@ -140,6 +140,7 @@ class App extends PureComponent {
     });
 
     this.setState({
+      viewableResults: results.slice(0, perPage -1),
       filteredRecords: results,
       page:1
     });
