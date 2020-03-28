@@ -38,6 +38,7 @@ class AddForm extends PureComponent {
       placeOptions: ["Indoor", "Outdoor", "Both Indoor and Outdoor"],
       involvementOptions: ["None", "Low", "Medium", "High"],
       ageOptions: ["All Ages", "Infant (0-12 months)", "Toddler (12-36 months)", "Preschool (ages 3-5)", "Kindergarten", "Grades 1-2", "Grades 3-4", "Middle School", "High School"],
+      errorMessage: '',
     };
 
     this.handleInput = this.handleInput.bind(this);
@@ -58,32 +59,41 @@ class AddForm extends PureComponent {
       preparation,
       place,
       screenNeeded,
+      errorMessage
     } = this.state;
 
     const date = new Date();
     const convertedDate = moment(date).format("MM/DD/YYYY HH:mm:ss");
 
-    base("Activities").create(
-      {
-        "Activity Name": activityName,
-        "Description": description,
-        "Recommended Ages": age.join(", "),
-        "Parent Involvement": involvement,
-        "Location": place,
-        "Device Required": screenNeeded,
-        "Link": moreInfo,
-        "Preparation/Supplies": preparation,
-        "Submitted At": convertedDate,
-        "Reviewed": "No"
-      },
-      function(err, record) {
-        if (err) {
-          console.error(err);
+    // activityName, age, involvement, place, screenNeeded
+    if (activityName == '' || age.length == 0 || involvement == '' || place == '' || screenNeeded == '') {
+      this.setState({'errorMessage': 'Please fill out all required fields.'});
+      return;
+    }
+    else {
+      this.setState({'errorMessage': ''});
+      base("Activities").create(
+        {
+          "Activity Name": activityName,
+          "Description": description,
+          "Recommended Ages": age.join(", "),
+          "Parent Involvement": involvement,
+          "Location": place,
+          "Device Required": screenNeeded,
+          "Link": moreInfo,
+          "Preparation/Supplies": preparation,
+          "Submitted At": convertedDate,
+          "Reviewed": "No"
+        },
+        function(err, record) {
+          if (err) {
+            console.error(err);
+          }
+          console.log(record.getId());
         }
-        console.log(record.getId());
-      }
-      // @TODO: Close form once submitted.
-    );
+        // @TODO: Close form once submitted.
+      );
+    }
   };
 
 
@@ -104,7 +114,8 @@ class AddForm extends PureComponent {
       screenNeededOptions,
       placeOptions,
       involvementOptions,
-      ageOptions
+      ageOptions,
+      errorMessage
     } = this.state;
 
     console.log(this.state);
@@ -200,6 +211,7 @@ class AddForm extends PureComponent {
         >
           Add
         </Button>
+        {errorMessage && <div className="add-form__error">{errorMessage}</div>}
       </form>
     );
   }

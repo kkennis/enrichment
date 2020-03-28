@@ -25,4 +25,13 @@
       }
     }
   }
+
+  &__error {
+    color: red;
+  }
+}
+
+.MuiFormLabel-asterisk,
+.MuiInputLabel-asterisk{
+  color: red;
 }
