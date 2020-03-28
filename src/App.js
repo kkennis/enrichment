@@ -6,6 +6,7 @@ import AddForm from "../src/components/AddForm";
 import Button from "@material-ui/core/Button";
 import Pagination from '@material-ui/lab/Pagination';
 import './styles.scss';
+import EmailButton from "./components/EmailButton";
 
 //@TODO: Need to figure out how to cache results so we don't hit api so many times
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -27,10 +28,6 @@ class App extends PureComponent {
     this.filterResults = this.filterResults.bind(this);
     this.toggleAddFormFromChild = this.toggleAddFormFromChild.bind(this);
   }
-
-  static defaultProps = {
-    email: 'example@example.com'
-  };
 
   componentDidMount() {
     let count = 0;
@@ -171,7 +168,7 @@ class App extends PureComponent {
           >
             {showAddForm ? 'Hide Form' : 'Add Activity'}
           </Button>
-          <a className="MuiButtonBase-root MuiButton-root MuiButton-contained" href={`mailto:${email}`}>EmailButton</a>
+          <EmailButton />
         </div>
         {showAddForm && <AddForm action={this.toggleAddFormFromChild} />}
         
