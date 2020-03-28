@@ -65,7 +65,7 @@ class AddForm extends PureComponent {
     const date = new Date();
     const convertedDate = moment(date).format("MM/DD/YYYY HH:mm:ss");
 
-    // activityName, age, involvement, place, screenNeeded
+    // @TODO: If necessary create more robust form validation using formick
     if (activityName == '' || age.length == 0 || involvement == '' || place == '' || screenNeeded == '') {
       this.setState({'errorMessage': 'Please fill out all required fields.'});
       return;
@@ -88,11 +88,12 @@ class AddForm extends PureComponent {
         function(err, record) {
           if (err) {
             console.error(err);
+            this.setState({'errorMessage': 'There was an error submitting the form. Please try again.'});
           }
           console.log(record.getId());
         }
-        // @TODO: Close form once submitted.
       );
+      this.props.action(false);
     }
   };
 

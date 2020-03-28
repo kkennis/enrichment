@@ -5,14 +5,13 @@ import FilterForm from "../src/components/FilterForm";
 import AddForm from "../src/components/AddForm";
 import Button from "@material-ui/core/Button";
 import Pagination from '@material-ui/lab/Pagination';
+import './styles.scss';
 
 //@TODO: Need to figure out how to cache results so we don't hit api so many times
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE = process.env.REACT_APP_BASE;
 const base = new Airtable({ apiKey: API_KEY }).base(BASE);
 const perPage = 20;
-
-
 
 class App extends PureComponent {
   constructor(props) {
@@ -26,6 +25,7 @@ class App extends PureComponent {
       viewableResults: []
     };
     this.filterResults = this.filterResults.bind(this);
+    this.toggleAddFormFromChild = this.toggleAddFormFromChild.bind(this);
   }
 
   static defaultProps = {
@@ -154,6 +154,10 @@ class App extends PureComponent {
     this.setState({'showAddForm': !showAddForm});
   }
 
+  toggleAddFormFromChild(bool) {
+    this.setState({'showAddForm': bool});
+  }
+
   render() {
     const { showAddForm } = this.state;
     const { email } = this.props;
@@ -171,7 +175,7 @@ class App extends PureComponent {
           {/*@TODO: STYLE LIKE OTHER BUTTONS*/}
           <a href={`mailto:${email}`}>EmailButton</a>
         </div>
-        {showAddForm && <AddForm />}
+        {showAddForm && <AddForm action={this.toggleAddFormFromChild} />}
         
         <FilterForm sendFilters={this.filterResults} />
         <Pagination count={Math.ceil(this.state.filteredRecords.length / perPage)}
