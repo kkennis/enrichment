@@ -14,6 +14,8 @@ const BASE = process.env.REACT_APP_BASE;
 const base = new Airtable({ apiKey: API_KEY }).base(BASE);
 const perPage = 15;
 
+
+
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -59,39 +61,6 @@ class App extends PureComponent {
       });
 
   }
-  /*
-    //calling API
-    filterResults(filters){
-      let queryString = 'AND(OR(FIND("'+filters.search+'",{Activity Name}),FIND("'+filters.search+'",{Description}),FIND("'+filters.search+'",{Preparation/Supplies}))';
-      console.log(filters.place);
-      if (filters.place !== ""){
-        queryString = queryString.concat(',"'+filters.place+'"={Location}');
-      }
-      if (filters.involvement !== ""){
-        queryString = queryString.concat(',"'+filters.involvement+'"={Parent Involvement}');
-      }
-      if (filters.age !== ""){
-        queryString = queryString.concat(',"'+filters.age+'"={Recommended Ages}');
-      }
-      if (filters.screens !== ""){
-        queryString = queryString.concat(',"'+filters.screens+'"={Device Required}');
-      }
-      queryString+=')';
-      console.log(queryString);
-      base("Activities")
-        .select({ view: "Grid view" , maxRecords: 20, sort: [
-          {field: 'Activity Name', direction: 'asc'}    ], filterByFormula:queryString})
-        .eachPage((data, fetchNextPage) => {
-          this.setState({
-            records: data
-          });
-          this.setState({
-            filteredRecords: data
-          });
-          // Airtable API’s way of giving us the next record in our spreadsheet
-          fetchNextPage();
-        });
-    }*/
 
   // HANDLE PAGE CHANGE
   handlePageChange = (event, value) => {
@@ -110,8 +79,14 @@ class App extends PureComponent {
       });
   };
 
+
+
   //filtering existing results
   filterResults(filters) {
+    //to compare strings for filter
+    let compareStrings = function (a, b) {
+      return a.toLowerCase().includes(b.toLowerCase());
+    }
     let results = this.state.records.filter(function (record) {
       if (!record.fields["Activity Name"]) {
         record.fields["Activity Name"] = "";
@@ -134,24 +109,23 @@ class App extends PureComponent {
       //edge cases of location
       let test = false;
       if (filters.place == "") { test = true }
-      else if (record.fields["Location"].includes(filters.place)) {
-        if (record.fields["Location"].includes("and") && filters.place.includes("and")) {
+      else if (compareStrings(record.fields["Location"], filters.place)) {
+        if (compareStrings(record.fields["Location"], "and") && compareStrings(filters.place, "and")) {
           test = true;
         }
         else {
-          if (!record.fields["Location"].includes("and") && record.fields["Location"].includes(filters.place)) {
+          if (!compareStrings(record.fields["Location"], "and") && compareStrings(record.fields["Location"], filters.place)) {
             test = true;
           }
         }
       }
       //filtering
       return (
-        ///want to change location includes to ==, but causes filter error O.o I HAVE NO IDEA WHYYYY!!!!!
-        record.fields["Device Required"].includes(filters.screens) && test &&
-        record.fields["Recommended Ages"].includes(filters.age) &&
-        record.fields["Parent Involvement"].includes(filters.involvement) &&
-        (record.fields["Description"].includes(filters.search) ||
-          record.fields["Activity Name"].includes(filters.search))
+        compareStrings(record.fields["Device Required"], filters.screens) && test &&
+        compareStrings(record.fields["Recommended Ages"], filters.age) &&
+        compareStrings(record.fields["Parent Involvement"], filters.involvement) &&
+        (compareStrings(record.fields["Description"], filters.search) ||
+          compareStrings(record.fields["Activity Name"], filters.search))
       );
     });
     this.setState({
@@ -185,6 +159,8 @@ class App extends PureComponent {
       )
     }
   }
+
+  //pagination buttons
   renderPagination() {
     return (
       <Pagination count={Math.ceil(this.state.filteredRecords.length / perPage)}

@@ -165,7 +165,7 @@ export default function FilterForm(props) {
       <Button
         onClick={clearForm}
         className={classes.formControl}
-        variant="contained" disableElevation
+        variant="outlined" disableElevation
       >
         Reset
       </Button>
