@@ -107,7 +107,6 @@ class App extends PureComponent {
 
   //filtering existing results
   filterResults(filters) {
-    console.log(filters);
     let results = this.state.records.filter(function(record) {
       if (!record.fields["Activity Name"]) {
         record.fields["Activity Name"] = "";
@@ -127,17 +126,29 @@ class App extends PureComponent {
       if (!record.fields["Device Required"]) {
         record.fields["Device Required"] = "";
       }
+      //edge cases of location
+      let test = false;
+      if(filters.place==""){test = true}
+      else if (record.fields["Location"].includes(filters.place)){
+        if (record.fields["Location"].includes("and") && filters.place.includes("and")){
+          test = true;
+        }
+        else{
+          if (!record.fields["Location"].includes("and") && record.fields["Location"].includes(filters.place)){
+            test  = true;
+          }
+        }
+      }
+      //filtering
       return (
         ///want to change location includes to ==, but causes filter error O.o I HAVE NO IDEA WHYYYY!!!!!
-        record.fields["Location"].includes(filters.place) &&
-        record.fields["Device Required"].includes(filters.screens) &&
+        record.fields["Device Required"].includes(filters.screens) && test && 
         record.fields["Recommended Ages"].includes(filters.age) &&
         record.fields["Parent Involvement"].includes(filters.involvement) &&
         (record.fields["Description"].includes(filters.search) ||
           record.fields["Activity Name"].includes(filters.search))
       );
     });
-    console.log("results " + results);
     this.setState({
       viewableResults: results.slice(0, perPage),
       filteredRecords: results,
