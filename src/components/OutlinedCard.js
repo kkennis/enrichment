@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "@material-ui/styles";
-
+import '../styles.scss';
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -40,6 +40,7 @@ const styles = theme => ({
     textAlign: "center",
     display: "inline-block"
   }
+
 });
 
 class OutlinedCard extends PureComponent {
@@ -98,7 +99,7 @@ class OutlinedCard extends PureComponent {
         </CardContent>
         <CardActions>
           {validURL({learnMoreLink}) && (
-            <Button variant="contained" size="medium"  color="primary" disableElevation target="_blank" href={learnMoreLink} size="small">
+            <Button variant="contained" size="medium"  color="primary" disableElevation target="_blank" href={learnMoreLink} >
               Learn More
             </Button>
           )}

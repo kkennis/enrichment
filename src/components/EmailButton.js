@@ -1,5 +1,9 @@
 import React, { PureComponent } from "react";
 import PropTypes from 'prop-types';
+import Button from "@material-ui/core/Button";
+import EmailIcon from '@material-ui/icons/Email';
+
+
 
 export default class EmailButton extends PureComponent {
 
@@ -16,7 +20,10 @@ export default class EmailButton extends PureComponent {
     const { email } = this.props;
 
     return (
-      <a className="MuiButtonBase-root MuiButton-root MuiButton-contained" href={`mailto:${email}`}>EmailButton</a>
-    );
+      <Button href={`mailto:${email}`} className="MuiButtonBase-root MuiButton-root MuiButton-contained"
+      variant="contained"
+      color="default" 
+      startIcon={<EmailIcon />}>Feedback</Button>
+      );
   }
 }
