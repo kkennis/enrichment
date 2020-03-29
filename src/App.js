@@ -177,7 +177,6 @@ class App extends PureComponent {
 
   render() {
     const { showAddForm } = this.state;
-    const { email } = this.props;
     return (
       <div className="enrichment-app">
         <div className="enrichment-app__form-wrapper">
@@ -187,7 +186,6 @@ class App extends PureComponent {
           >
             {showAddForm ? 'Hide Form' : 'Add Activity'}
           </Button>
-          <EmailButton />
         </div>
         {showAddForm && <AddForm action={this.toggleAddFormFromChild} />}
 
