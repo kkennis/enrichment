@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import moment from 'moment';
 
 import TextInput from "../components/FormInput/TextInput";
@@ -16,12 +15,6 @@ import Airtable from "airtable";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE = process.env.REACT_APP_BASE;
 const base = new Airtable({ apiKey: API_KEY }).base(BASE);
-
-// const styles = theme => ({
-//   selectEmpty: {
-//     marginTop: theme.spacing(2)
-//   }
-// });
 
 class AddForm extends PureComponent {
   constructor(props) {
@@ -89,10 +82,10 @@ class AddForm extends PureComponent {
         },
         function(err, record) {
           if (err) {
-            console.error(err);
+            // console.error(err);
             this.setState({'errorMessage': 'There was an error submitting the form. Please try again.'});
           }
-          console.log(record.getId());
+          // console.log(record.getId());
         }
       );
       this.props.action(false);

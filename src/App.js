@@ -14,8 +14,6 @@ const BASE = process.env.REACT_APP_BASE;
 const base = new Airtable({ apiKey: API_KEY }).base(BASE);
 const perPage = 15;
 
-
-
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -39,23 +37,23 @@ class App extends PureComponent {
           { field: 'Activity Name', direction: 'asc' }], filterByFormula: 'FIND("Yes",{Reviewed})'
       })
       .eachPage((data, fetchNextPage) => {
-        console.log(data.length);
+        // console.log(data.length);
         let records = this.state.records;
         this.setState({
           records: records.concat(data)
         });
         if (count === 0) {
           count++;
-          console.log(data.slice(perPage - 1));
+          // console.log(data.slice(perPage - 1));
           this.setState({
             viewableResults: data.slice(0, perPage - 1)
           })
-          console.log("viewable" + this.state.viewableResults);
+          // console.log("viewable" + this.state.viewableResults);
         }
         this.setState({
           filteredRecords: records.concat(data),
         });
-        console.log(records.length);
+        // console.log(records.length);
         // Airtable API’s way of giving us the next record in our spreadsheet
         fetchNextPage();
       });
@@ -64,9 +62,9 @@ class App extends PureComponent {
 
   // HANDLE PAGE CHANGE
   handlePageChange = (event, value) => {
-    console.log(this.state.page);
-    console.log(this.state.filteredRecords);
-    console.log(this.state.viewableResults);
+    // console.log(this.state.page);
+    // console.log(this.state.filteredRecords);
+    // console.log(this.state.viewableResults);
     this.setState({ page: value })
     if (perPage * value >= this.state.filteredRecords.length)
       this.setState({
@@ -185,7 +183,7 @@ class App extends PureComponent {
         </div>
         {showAddForm && <AddForm action={this.toggleAddFormFromChild} />}
 
-        <div class="resultsDiv">
+        <div className="resultsDiv">
           <FilterForm sendFilters={this.filterResults} />
           {this.state.viewableResults.length > (perPage - 2) &&
             this.renderPagination()}
