@@ -6,7 +6,6 @@ import AddForm from "../src/components/AddForm";
 import Button from "@material-ui/core/Button";
 import Pagination from '@material-ui/lab/Pagination';
 import './styles.scss';
-import EmailButton from "./components/EmailButton";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 //@TODO: Need to figure out how to cache results so we don't hit api so many times
