@@ -6,7 +6,6 @@ import AddForm from "../src/components/AddForm";
 import Button from "@material-ui/core/Button";
 import Pagination from '@material-ui/lab/Pagination';
 import './styles.scss';
-import EmailButton from "./components/EmailButton";
 
 //@TODO: Need to figure out how to cache results so we don't hit api so many times
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -169,7 +168,6 @@ class App extends PureComponent {
 
   render() {
     const { showAddForm } = this.state;
-    const { email } = this.props;
     return (
       <div className="enrichment-app">
         <div className="enrichment-app__form-wrapper">
@@ -179,7 +177,6 @@ class App extends PureComponent {
           >
             {showAddForm ? 'Hide Form' : 'Add Activity'}
           </Button>
-          <EmailButton />
         </div>
         {showAddForm && <AddForm action={this.toggleAddFormFromChild} />}
 
