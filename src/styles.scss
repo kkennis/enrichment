@@ -99,3 +99,13 @@ $breakpoint-tablet: 768px;
 .email-button.MuiButton-contained {
   margin-left: 16px;
 }
+
+#loadingDiv{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+#loadingDiv h2{
+  width: 100%;
+  text-align: center;
+}

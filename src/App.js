@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Pagination from '@material-ui/lab/Pagination';
 import './styles.scss';
 import EmailButton from "./components/EmailButton";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 //@TODO: Need to figure out how to cache results so we don't hit api so many times
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -46,7 +47,7 @@ class App extends PureComponent {
           count++;
           // console.log(data.slice(perPage - 1));
           this.setState({
-            viewableResults: data.slice(0, perPage - 1)
+            viewableResults: data.slice(0, perPage)
           })
           // console.log("viewable" + this.state.viewableResults);
         }
@@ -62,10 +63,14 @@ class App extends PureComponent {
 
   // HANDLE PAGE CHANGE
   handlePageChange = (event, value) => {
+    window.scrollTo(0, 0);
     // console.log(this.state.page);
     // console.log(this.state.filteredRecords);
     // console.log(this.state.viewableResults);
     this.setState({ page: value })
+    console.log(perPage);
+    console.log(value);
+    console.log(this.state.filteredRecords.length)
     if (perPage * value >= this.state.filteredRecords.length)
       this.setState({
         viewableResults: (this.state.filteredRecords.slice((value - 1) * perPage))
@@ -145,7 +150,10 @@ class App extends PureComponent {
   renderNoResults() {
     if (this.state.records.length == 0) {
       return (
-        <h2>Loading...</h2>
+        <div id="loadingDiv">
+          <h2>We're getting the information for you. It should only take a few moments...</h2>
+          <CircularProgress id="loadingGraphic" size={100} />
+        </div>
       )
     }
     else {
@@ -185,7 +193,7 @@ class App extends PureComponent {
 
         <div className="resultsDiv">
           <FilterForm sendFilters={this.filterResults} />
-          {this.state.viewableResults.length > (perPage - 2) &&
+          {this.state.filteredRecords.length > (perPage - 1) &&
             this.renderPagination()}
           {this.state.viewableResults.length > 0 ? (
             this.state.viewableResults.map((record, index) => (
@@ -206,7 +214,7 @@ class App extends PureComponent {
               this.renderNoResults()
             )}
 
-          {this.state.viewableResults.length > (perPage - 2) &&
+          {this.state.filteredRecords.length > (perPage -1) &&
             this.renderPagination()}
         </div>
       </div>
