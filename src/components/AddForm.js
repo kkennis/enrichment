@@ -61,7 +61,7 @@ class AddForm extends PureComponent {
     const convertedDate = moment(date).format("MM/DD/YYYY HH:mm:ss");
 
     // @TODO: If necessary create more robust form validation using formick
-    if (activityName == '' || age.length == 0 || involvement == '' || place == '' || screenNeeded == '') {
+    if (activityName === '' || age.length === 0 || involvement === '' || place === '' || screenNeeded === '') {
       this.setState({'errorMessage': 'Please fill out all required fields.'});
       return;
     }
@@ -118,102 +118,101 @@ class AddForm extends PureComponent {
 
     return (
       <Card className="formCard">
-      <form id="add-form">
-        <div className="add-form__field-wrapper">
-          <div className="add-form__field-wrapper-column">
-            <TextInput
-              name="activityName"
-              label="Activity Name"
-              id="input-activity-name"
-              handleChange={this.handleInput}
-              value={activityName}
-              required={true}
-            />
-            {/*@TODO: Switch to textarea?*/}
-            <TextInput
-              name="description"
-              label="Description"
-              id="input-description"
-              handleChange={this.handleInput}
-              value={description}
-            />
-            <SelectMultipleInput
-              id="input-age"
-              labelId="input-age-label"
-              name="age"
-              required={true}
-              label="Recommended Ages"
-              handleChange={this.handleInput}
-              value={age}
-              options={ageOptions}
-            />
+        <form id="add-form">
+          <div className="add-form__field-wrapper">
+            <div className="add-form__field-wrapper-column">
+              <TextInput
+                name="activityName"
+                label="Activity Name"
+                id="input-activity-name"
+                handleChange={this.handleInput}
+                value={activityName}
+                required={true}
+              />
 
-            <SelectInput
-              id="input-involvement"
-              labelId="input-involvement-label"
-              name="involvement"
-              label="Parent Involvement"
-              required={true}
-              handleChange={this.handleInput}
-              value={involvement}
-              options={involvementOptions}
-            />
+              <TextAreaInput
+                name="description"
+                label="Description"
+                id="input-description"
+                handleChange={this.handleInput}
+                value={description}
+              />
+              <SelectMultipleInput
+                id="input-age"
+                labelId="input-age-label"
+                name="age"
+                required={true}
+                label="Recommended Ages"
+                handleChange={this.handleInput}
+                value={age}
+                options={ageOptions}
+              />
 
-            <TextInput
-              name="moreInfo"
-              label="Link for More Info"
-              id="input-more-info-link"
-              handleChange={this.handleInput}
-              value={moreInfo}
-            />
-            {/*@TODO: SWitch to textinput?*/}
-            <TextAreaInput
-              name="preparation"
-              label="Preparation / Supplies"
-              id="input-preparation"
-              handleChange={this.handleInput}
-              value={preparation}
-            />
+              <SelectInput
+                id="input-involvement"
+                labelId="input-involvement-label"
+                name="involvement"
+                label="Parent Involvement"
+                required={true}
+                handleChange={this.handleInput}
+                value={involvement}
+                options={involvementOptions}
+              />
+
+            </div>
+            <div className="add-form__field-wrapper-column">
+              <TextInput
+                name="moreInfo"
+                label="Link for More Info"
+                id="input-more-info-link"
+                handleChange={this.handleInput}
+                value={moreInfo}
+              />
+
+              <TextInput
+                name="preparation"
+                label="Preparation / Supplies"
+                id="input-preparation"
+                handleChange={this.handleInput}
+                value={preparation}
+              />
+
+              <SelectInput
+                id="input-place"
+                labelId="input-place-label"
+                name="place"
+                label="Location"
+                required={true}
+                handleChange={this.handleInput}
+                value={place}
+                options={placeOptions}
+              />
+
+              <SelectInput
+                id="input-screen"
+                labelId="input-screen-label"
+                name="screenNeeded"
+                label="Device Required"
+                required={true}
+                handleChange={this.handleInput}
+                value={screenNeeded}
+                options={screenNeededOptions}
+              />
+            </div>
           </div>
-          <div className="add-form__field-wrapper-column">
 
-            <SelectInput
-              id="input-place"
-              labelId="input-place-label"
-              name="place"
-              label="Location"
-              required={true}
-              handleChange={this.handleInput}
-              value={place}
-              options={placeOptions}
-            />
-
-            <SelectInput
-              id="input-screen"
-              labelId="input-screen-label"
-              name="screenNeeded"
-              label="Device Required"
-              required={true}
-              handleChange={this.handleInput}
-              value={screenNeeded}
-              options={screenNeededOptions}
-            />
-          </div>
-        </div>
-
-        <Button
-          onClick={() => { this.addForm() }}
-          // className={classes.formControl}
-          variant="contained"
-        >
-          Add
-        </Button>
-        {errorMessage && <div className="add-form__error">{errorMessage}</div>}
-      </form>
+          <Button
+            className="add-form__add-button"
+            onClick={() => { this.addForm() }}
+            variant="contained"
+          >
+            Add
+          </Button>
+          {errorMessage && <div className="add-form__error">{errorMessage}</div>}
+        </form>
       </Card>
     );
   }
 }
 
-// export default withStyles(styles)(AddForm);
 export default AddForm;

@@ -20,7 +20,7 @@ export default class EmailButton extends PureComponent {
     const { email } = this.props;
 
     return (
-      <Button href={`mailto:${email}`} className="MuiButtonBase-root MuiButton-root MuiButton-contained"
+      <Button href={`mailto:${email}`} className="email-button MuiButtonBase-root MuiButton-root MuiButton-contained"
       variant="contained"
       color="default" 
       startIcon={<EmailIcon />}>Feedback</Button>
